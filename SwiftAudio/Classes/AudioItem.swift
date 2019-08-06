@@ -146,6 +146,7 @@ public class DefaultAudioItemAssetOptionsProviding: DefaultAudioItem, AssetOptio
         super.init(audioUrl: audioUrl, artist: artist, title: title, albumTitle: albumTitle, sourceType: sourceType, artwork: artwork)
     }
     
+
     public func getAssetOptions() -> [String: Any] {
         return options
     }

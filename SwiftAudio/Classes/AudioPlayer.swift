@@ -169,7 +169,10 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         if (automaticallyUpdateNowPlayingInfo) {
             self.loadNowPlayingMetaValues()
         }
-        enableRemoteCommands(forItem: item)
+        
+        if (item is RemoteCommandable) {
+            enableRemoteCommands(forItem: item)
+        }
     }
     
     /**
@@ -306,14 +309,16 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
     
     func AVWrapper(didChangeState state: AVPlayerWrapperState) {
         switch state {
-        case .ready, .loading:
+        case .ready:
             if (automaticallyUpdateNowPlayingInfo) {
                 updateNowPlayingPlaybackValues()
             }
+            
             setTimePitchingAlgorithmForCurrentItem()
         case .playing, .paused:
             if (automaticallyUpdateNowPlayingInfo) {
-                updateNowPlayingPlaybackValues()
+                updateNowPlayingCurrentTime(currentTime)
+                updateNowPlayingRate(rate)
             }
         default: break
         }
@@ -333,6 +338,10 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
             updateNowPlayingCurrentTime(currentTime)
         }
         self.event.seek.emit(data: (seconds, didFinish))
+    }
+    
+    func AVWrapper(didUpdateMetadata metadata: Any) {
+        self.event.updateMetadata.emit(data: metadata)
     }
     
     func AVWrapper(didUpdateDuration duration: Double) {
