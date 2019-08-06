@@ -12,6 +12,7 @@ extension AudioPlayer {
     public typealias StateChangeEventData = (AudioPlayerState)
     public typealias PlaybackEndEventData = (PlaybackEndedReason)
     public typealias SecondElapseEventData = (TimeInterval)
+    public typealias MetadataUpdateEventData = (Any)
     public typealias FailEventData = (Error?)
     public typealias SeekEventData = (seconds: Int, didFinish: Bool)
     public typealias UpdateDurationEventData = (Double)
@@ -36,6 +37,13 @@ extension AudioPlayer {
          - Important: Remember to dispatch to the main queue if any UI is updated in the event handler.
          */
         public let secondElapse: AudioPlayer.Event<SecondElapseEventData> = AudioPlayer.Event()
+        
+        /**
+         Emitted when metadata is updated in the `AudioPlayer`.
+         - Important: Remember to dispatch to the main queue if any UI is updated in the event handler.
+         */
+        public let updateMetadata: AudioPlayer.Event<MetadataUpdateEventData> = AudioPlayer.Event()
+
         
         /**
          Emitted when the player encounters an error. This will ultimately result in the AVPlayer instance to be recreated.

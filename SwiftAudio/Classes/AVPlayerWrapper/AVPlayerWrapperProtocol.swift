@@ -52,5 +52,7 @@ protocol AVPlayerWrapperProtocol: class {
     func load(from url: URL, playWhenReady: Bool, options: [String: Any]?)
     
     func load(from url: URL, playWhenReady: Bool, initialTime: TimeInterval?, options: [String: Any]?)
+
+    func audioPlayer(didUpdateEmptyMetadataOn item: Track, withData data: Metadata)
     
 }
