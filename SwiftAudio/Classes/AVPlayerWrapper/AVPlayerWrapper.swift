@@ -18,11 +18,6 @@ public enum PlaybackEndedReason: String {
     case jumpedToIndex
 }
 
-public enum MetadataUpdated: String {
-    case updatedOnLoad
-    case updatedDuringLivestream
-}
-
 typealias Metadata = [AVMetadataItem]
 
 class AVPlayerWrapper: AVPlayerWrapperProtocol {

@@ -91,14 +91,13 @@ class AVPlayerItemObserver: NSObject {
         
         case AVPlayerItemKeyPath.metadata:
             guard let observedItem = observingItem?.timedMetadata else { return }
+            var dict: [String: String] = [:]
             for md in observedItem {
-                    if let songName = md.value(forKey: "value") as? String {
-                        print("song name is '\(songName)'")
-                        // RNTrackPlayer().updateMetadata(data: md)
-                    }
-                    
+                if let songName = md.value(forKey: "value") as? String, let key = md.value(forKey: "key") as? String {
+                    dict[key] = songName;
                 }
-            self.delegate?.item(didUpdateMetadata: observedItem)
+            }
+            self.delegate?.item(didUpdateMetadata: dict)
         
         default: break
             
